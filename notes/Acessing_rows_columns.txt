@@ -1,0 +1,33 @@
+collect() is an action hence it does not return a DataFrame instead, it returns data in an Array to the driver. Once the data is in an array, you can use python for loop to process it further.
+for row in dataCollect:
+    print(row['dept_name'] + "," +str(row['dept_id']))
+
+deptDF.collect() returns Array of Row type.
+deptDF.collect()[0] returns the first element in an array (1st row).
+deptDF.collect[0][0] returns the value of the first row & first column.
+
+
+
+# first row - second column 
+print("first row - second column  :", 
+      dataframe.collect()[0][1]) 
+
+
+column_sums = df2.select([F.sum(col).alias(col) for col in df2.columns])
+column_sums.show()
+If you need to sum the values of all rows for each column, you can use PySpark SQL functions:
+
+
+
+Using df2.collect() is inefficient for large datasets because it brings all data to the driver node, which can cause memory issues.
+# Sum the elements of the first row
+total = 0
+first_row = df2.collect()[0]  # Collect only the first row
+for i in range(len(first_row)):
+    total += first_row[i]
+
+print(f"Sum of the first row: {total}")
+
+# Select the first row and sum its elements
+first_row = df2.first()  # Get the first row as a Row object
+total = sum(first_row)  # Sum the values of the first row
